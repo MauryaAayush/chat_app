@@ -1,10 +1,10 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import '../components/my_button.dart';
 import '../components/my_textField.dart';
 
 class RegisterScreen extends StatelessWidget {
-
   final TextEditingController _txtemail = TextEditingController();
   final TextEditingController _txtpass = TextEditingController();
   final TextEditingController _txtcnfpass = TextEditingController();
@@ -12,9 +12,35 @@ class RegisterScreen extends StatelessWidget {
   // to go to register page
   final void Function()? onTap;
 
-  RegisterScreen({super.key,required this.onTap});
+  RegisterScreen({super.key, required this.onTap});
 
-  void register(){}
+  void register(BuildContext context) {
+    final _auth = AuthService();
+
+    // if password match
+    if (_txtcnfpass.text == _txtpass.text) {
+      try {
+        _auth.signUpWithEmailPassword(_txtemail.text, _txtpass.text);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    }
+
+    // if password doesn't match
+    else {
+      showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+          title: Text("Password doesn't match!"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +56,9 @@ class RegisterScreen extends StatelessWidget {
               size: 60,
               color: Theme.of(context).colorScheme.primary,
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
 
             // welcome back msg
             Text(
@@ -41,7 +69,9 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
 
             //   email textfield
             MyTextField(
@@ -49,7 +79,9 @@ class RegisterScreen extends StatelessWidget {
               obscureText: false,
               controller: _txtemail,
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             //   pass textfield
             MyTextField(
               hintText: "Password",
@@ -57,7 +89,9 @@ class RegisterScreen extends StatelessWidget {
               controller: _txtpass,
             ),
             // confirm password
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             //   pass textfield
             MyTextField(
               hintText: "Confirm Password",
@@ -65,29 +99,38 @@ class RegisterScreen extends StatelessWidget {
               controller: _txtcnfpass,
             ),
             //   login button
-            const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
 
-            MyButton(text: "Register",onTap: register,),
+            MyButton(
+              text: "Register",
+              onTap: () => register(context),
+            ),
             //   register now
-            const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
 
             Row(
-              mainAxisAlignment:
-              MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Already have an account? ',style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary
-                ),),
+                Text(
+                  'Already have an account? ',
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
                 GestureDetector(
                   onTap: onTap,
-                  child: Text('Login now',style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary
-                  ),),
+                  child: Text(
+                    'Login now',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary),
+                  ),
                 ),
               ],
             )
-
           ],
         ),
       ),

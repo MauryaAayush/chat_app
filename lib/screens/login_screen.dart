@@ -35,9 +35,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25,),
 
             //   email textfield
             MyTextField(
@@ -45,9 +43,7 @@ class LoginScreen extends StatelessWidget {
               obscureText: false,
               controller: _txtemail,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             //   pass textfield
             MyTextField(
               hintText: "Password",

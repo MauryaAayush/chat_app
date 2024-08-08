@@ -20,6 +20,7 @@ class RegisterScreen extends StatelessWidget {
     // if password match
     if (_txtcnfpass.text == _txtpass.text) {
       try {
+
         _auth.signUpWithEmailPassword(_txtemail.text, _txtpass.text);
       } catch (e) {
         showDialog(

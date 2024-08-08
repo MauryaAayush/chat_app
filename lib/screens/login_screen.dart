@@ -1,8 +1,9 @@
-import 'package:chat_app/auth/auth_service.dart';
+
 import 'package:chat_app/components/my_button.dart';
 import 'package:flutter/material.dart';
 
 import '../components/my_textField.dart';
+import '../services/auth/auth_service.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _txtemail = TextEditingController();

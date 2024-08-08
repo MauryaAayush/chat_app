@@ -22,7 +22,7 @@ class ChatService{
  */
 
 
-  Future<Stream<List<Map<String, dynamic>>>> getUserStream() async {
+  Stream<List<Map<String,dynamic>>> getUserStream(){
 
   }
 

@@ -24,9 +24,7 @@ class LoginScreen extends StatelessWidget {
               size: 60,
               color: Theme.of(context).colorScheme.primary,
             ),
-            const SizedBox(
-              height: 50,
-            ),
+            const SizedBox(height: 50,),
 
             // welcome back msg
             Text(

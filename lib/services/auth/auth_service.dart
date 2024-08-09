@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -29,20 +31,34 @@ class AuthService {
       );
       return userCredential;
     } on FirebaseAuthException catch (e) {
+      log("\n\n"+e.toString() + "\n\n");
       throw Exception(e.code);
     }
   }
 
 // sign up
 
-  Future<UserCredential> signUpWithEmailPassword(String email, password) async {
+  Future<UserCredential?> signUpWithEmailPassword(String email, password,name,mobile) async {
     try {
       // create user
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      // save user info if it doesn't already exist
+      _firestore.collection("Users").doc(userCredential.user!.uid).set(
+          {
+            'uid' : userCredential.user!.uid,
+            'email' : email,
+            'name' : name,
+            'mobile' : mobile,
+          }
+      );
+
       return userCredential;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+    }  catch(e){
+      log("\n\n" +e.toString()+"\n\n");
+      return null;
+      // throw Exception(e.toString());
     }
   }
 

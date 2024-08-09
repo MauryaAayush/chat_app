@@ -42,7 +42,6 @@ class ChatScreen extends StatelessWidget {
           Expanded(
             child: _buildMessageList(),
           ),
-
           //   user input
           _buildUserInput(),
         ],
@@ -53,23 +52,19 @@ class ChatScreen extends StatelessWidget {
   Widget _buildMessageList() {
     String senderID = _authService.getCurrentUser()!.uid;
     return StreamBuilder(
-      stream: _chatService.getMessage(receiverID, senderID),
+      stream: _chatService.getMessages(receiverID, senderID),
       builder: (context, snapshot) {
         //   error
         if (snapshot.hasError) {
           return const Text('Error');
         }
-
         //   loading
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading.....');
         }
-
         // return list view
         return ListView(
-            children: snapshot.data!.docs
-                .map((doc) => _buildMessageItem(doc))
-                .toList());
+            children: snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList());
       },
     );
   }
@@ -77,7 +72,11 @@ class ChatScreen extends StatelessWidget {
   Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-    return Text(data["message"]);
+    print("-----------------------$data------------------------------");
+    return Text(data["message"],style: TextStyle(
+      color: Colors.red,
+      fontSize: 30
+    ),);
   }
 
   Widget _buildUserInput() {

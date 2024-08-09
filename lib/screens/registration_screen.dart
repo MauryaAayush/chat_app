@@ -9,6 +9,8 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController _txtemail = TextEditingController();
   final TextEditingController _txtpass = TextEditingController();
   final TextEditingController _txtcnfpass = TextEditingController();
+  final TextEditingController _txtname = TextEditingController();
+  final TextEditingController _txtmobile = TextEditingController();
 
   // to go to register page
   final void Function()? onTap;
@@ -22,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
     if (_txtcnfpass.text == _txtpass.text) {
       try {
 
-        _auth.signUpWithEmailPassword(_txtemail.text, _txtpass.text);
+        _auth.signUpWithEmailPassword(_txtemail.text, _txtpass.text,_txtname.text,_txtmobile.text);
       } catch (e) {
         showDialog(
           context: context,
@@ -74,6 +76,30 @@ class RegisterScreen extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
+
+
+            // name textfield
+            MyTextField(
+              hintText: "Enter Your Name",
+              obscureText: false,
+              controller: _txtname,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+
+            // mobile number
+
+            MyTextField(
+              hintText: "Mobile Number",
+              obscureText: false,
+              controller: _txtmobile,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
 
             //   email textfield
             MyTextField(

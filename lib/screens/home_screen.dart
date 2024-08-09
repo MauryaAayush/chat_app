@@ -51,7 +51,8 @@ class HomeScreen extends StatelessWidget {
     //   display all the user  except  current user
     if(userData['email'] != _authService.getCurrentUser()){
       return UserTile(
-        text: userData["email"],
+        textnum: userData['mobile'],
+        text: userData["name"],
         onTap: () {
           //   tapped on a user -> to go to chat
           Navigator.push(

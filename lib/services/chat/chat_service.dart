@@ -49,8 +49,8 @@ class ChatService {
 
     //   create a new message
     Message newMessage = Message(
-        senderID: currentUserId,
-        senderEmail: currentUserEmail,
+        senderID: currentUserEmail,
+        senderEmail: currentUserId,
         receiverID: receiverID,
         message: message,
         timestamp: timestamp);
@@ -70,7 +70,7 @@ class ChatService {
   }
 
 // get message
-  Stream<QuerySnapshot> getMessage(String userID, otherUserID) {
+  Stream<QuerySnapshot> getMessages(String userID, otherUserID) {
 // construct a chatroom ID for the two user
 
     List<String> ids = [userID, otherUserID];

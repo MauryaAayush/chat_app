@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 class ChatScreen extends StatelessWidget {
   final String receiverEmail;
   final String receiverID;
-  final String Username;
 
-  ChatScreen(
-      {super.key,
-      required this.receiverEmail,
-      required this.receiverID,
-      required this.Username});
+  // final String Username;
+
+  ChatScreen({
+    super.key,
+    required this.receiverEmail,
+    required this.receiverID,
+    // required this.Username
+  });
 
   // text controller
   final TextEditingController _messageController = TextEditingController();
@@ -38,7 +40,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Username),
+        title: Text(receiverEmail),
       ),
       body: Column(
         children: [
@@ -79,21 +81,23 @@ class ChatScreen extends StatelessWidget {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     // is current user
-    bool isCurrentUser = data['senderId'] == _authService.getCurrentUser()!.uid;
+    bool isCurrentUser =
+        data['senderEmail'] == _authService.getCurrentUser()!.uid;
 
     // align message to the right if sender is the current user, otherwise left
 
-    var alignment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+    var alignment =
+        isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
 
     print("-----------------------$data------------------------------");
     return Container(
       alignment: alignment,
       child: Column(
-        crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             data["message"],
-            style: TextStyle(color: Colors.red, fontSize: 30),
           ),
         ],
       ),
@@ -101,19 +105,35 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget _buildUserInput() {
-    return Row(
-      children: [
-        //  textfield should take up most of the space
-        Expanded(
-          child: MyTextField(
-            hintText: "Type a message",
-            obscureText: false,
-            controller: _messageController,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        children: [
+          //  textfield should take up most of the space
+          Expanded(
+            child: MyTextField(
+              hintText: "Type a message",
+              obscureText: false,
+              controller: _messageController,
+            ),
           ),
-        ),
 
-        IconButton(onPressed: sendMessage, icon: const Icon(Icons.arrow_upward))
-      ],
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle,
+            ),
+            margin: EdgeInsets.only(right: 25),
+            child: IconButton(
+              onPressed: sendMessage,
+              icon: const Icon(
+                Icons.arrow_upward,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

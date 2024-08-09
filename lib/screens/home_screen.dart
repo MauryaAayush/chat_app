@@ -49,17 +49,17 @@ class HomeScreen extends StatelessWidget {
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
     //   display all the user  except  current user
-    if(userData['email'] != _authService.getCurrentUser()){
+    if(userData['email'] != _authService.getCurrentUser()?.email){
       return UserTile(
-        textnum: userData['mobile'],
-        text: userData["name"],
+        // textnum: userData['mobile'],
+        text: userData["email"],
         onTap: () {
           //   tapped on a user -> to go to chat
           Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => ChatScreen(
-                  Username: userData["name"],
+                  // Username: userData["name"],
                   receiverID: userData["uid"],
                   receiverEmail: userData["email"],
                 ),

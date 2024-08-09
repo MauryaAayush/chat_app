@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
   final String text;
-  final String textnum;
+  // final String textnum;
   final void Function()? onTap;
 
   const UserTile(
       {super.key,
       required this.text,
       required this.onTap,
-      required this.textnum});
+      // required this.textnum
+
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class UserTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(text),
-                Text(textnum),
+                // Text(textnum),
               ],
             ),
           ],

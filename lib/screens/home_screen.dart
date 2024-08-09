@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
       stream: _chatService.getUserStream(),
       builder: (context, snapshot) {
         //   error
-        if (snapshot.hasData) {
+        if (snapshot.hasError) {
           return const Text('Error');
         }
         //   loading....
@@ -49,18 +49,22 @@ class HomeScreen extends StatelessWidget {
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
     //   display all the user  except  current user
-    return UserTile(
-      text: userData["Email"],
-      onTap: () {
-        //   tapped on a user -> to go to chat
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatScreen(
-                receiverEmail: userData["email"],
-              ),
-            ));
-      },
-    );
+    if(userData['email'] != _authService.getCurrentUser()){
+      return UserTile(
+        text: userData["email"],
+        onTap: () {
+          //   tapped on a user -> to go to chat
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                  receiverEmail: userData["email"],
+                ),
+              ));
+        },
+      );
+    }else{
+      return Container();
+    }
   }
 }

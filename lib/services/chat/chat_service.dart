@@ -62,7 +62,6 @@ class ChatService {
     String chatRoomID = ids.join();
 
     // add new msg to database
-
     await _firestore
         .collection("chat_rooms")
         .doc(chatRoomID)

@@ -7,9 +7,13 @@ import 'package:flutter/material.dart';
 class ChatScreen extends StatelessWidget {
   final String receiverEmail;
   final String receiverID;
+  final String Username;
 
   ChatScreen(
-      {super.key, required this.receiverEmail, required this.receiverID});
+      {super.key,
+      required this.receiverEmail,
+      required this.receiverID,
+      required this.Username});
 
   // text controller
   final TextEditingController _messageController = TextEditingController();
@@ -34,7 +38,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(receiverEmail),
+        title: Text(Username),
       ),
       body: Column(
         children: [
@@ -64,7 +68,9 @@ class ChatScreen extends StatelessWidget {
         }
         // return list view
         return ListView(
-            children: snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList());
+            children: snapshot.data!.docs
+                .map((doc) => _buildMessageItem(doc))
+                .toList());
       },
     );
   }
@@ -73,10 +79,10 @@ class ChatScreen extends StatelessWidget {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     print("-----------------------$data------------------------------");
-    return Text(data["message"],style: TextStyle(
-      color: Colors.red,
-      fontSize: 30
-    ),);
+    return Text(
+      data["message"],
+      style: TextStyle(color: Colors.red, fontSize: 30),
+    );
   }
 
   Widget _buildUserInput() {
@@ -92,7 +98,6 @@ class ChatScreen extends StatelessWidget {
         ),
 
         IconButton(onPressed: sendMessage, icon: const Icon(Icons.arrow_upward))
-
       ],
     );
   }

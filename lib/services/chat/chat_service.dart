@@ -59,7 +59,7 @@ class ChatService {
     List<String> ids = [currentUserId, receiverID];
     // sort the ids (this ensure that chatroomID is the same for any 2 people )
     ids.sort();
-    String chatRoomID = ids.join();
+    String chatRoomID = ids.join('_');
 
     // add new msg to database
     await _firestore

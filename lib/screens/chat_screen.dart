@@ -78,10 +78,25 @@ class ChatScreen extends StatelessWidget {
   Widget _buildMessageItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
+    // is current user
+    bool isCurrentUser = data['senderId'] == _authService.getCurrentUser()!.uid;
+
+    // align message to the right if sender is the current user, otherwise left
+
+    var alignment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+
     print("-----------------------$data------------------------------");
-    return Text(
-      data["message"],
-      style: TextStyle(color: Colors.red, fontSize: 30),
+    return Container(
+      alignment: alignment,
+      child: Column(
+        crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text(
+            data["message"],
+            style: TextStyle(color: Colors.red, fontSize: 30),
+          ),
+        ],
+      ),
     );
   }
 

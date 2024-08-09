@@ -23,12 +23,12 @@ class AuthService {
       );
 
       // save user info if it doesn't already exist
-      _firestore.collection("Users").doc(userCredential.user!.uid).set(
-          {
-            'uid' : userCredential.user!.uid,
-            'email' : email
-          }
-      );
+      // _firestore.collection("Users").doc(userCredential.user!.uid).set(
+      //     {
+      //       'uid' : userCredential.user!.uid,
+      //       'email' : email
+      //     }
+      // );
       return userCredential;
     } on FirebaseAuthException catch (e) {
       log("\n\n"+e.toString() + "\n\n");

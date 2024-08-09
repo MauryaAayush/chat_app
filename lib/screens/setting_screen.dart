@@ -1,4 +1,7 @@
+import 'package:chat_app/Themes/theme_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -12,6 +15,25 @@ class SettingScreen extends StatelessWidget {
         foregroundColor: Colors.grey,
         centerTitle: true,
         title: const Text('settings'),
+      ),
+      body: Container(
+        margin: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(12)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Dark Theme"),
+            CupertinoSwitch(
+              value: Provider.of<ThemeProvider>(context, listen: false).isdark,
+              onChanged: (value) =>
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .toggleTheme(),
+            )
+          ],
+        ),
       ),
     );
   }

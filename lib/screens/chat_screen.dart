@@ -5,12 +5,11 @@ import 'package:chat_app/services/chat/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   final String receiverEmail;
   final String receiverID;
 
   // final String Username;
-
   ChatScreen({
     super.key,
     required this.receiverEmail,
@@ -18,11 +17,17 @@ class ChatScreen extends StatelessWidget {
     // required this.Username
   });
 
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
   // text controller
   final TextEditingController _messageController = TextEditingController();
 
   //  chat & auth service
   final ChatService _chatService = ChatService();
+
   final AuthService _authService = AuthService();
 
   // send message
@@ -30,8 +35,7 @@ class ChatScreen extends StatelessWidget {
     // if there is something inside textfield
     if (_messageController.text.isNotEmpty) {
       // send the message
-      await _chatService.sendMessage(receiverID, _messageController.text);
-
+      await _chatService.sendMessage(widget.receiverID, _messageController.text);
       //   clear text controller
       _messageController.clear();
     }
@@ -40,8 +44,12 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: Text(receiverEmail),
+        title: Text(widget.receiverEmail),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey,
+        elevation: 0,
       ),
       body: Column(
         children: [
@@ -59,7 +67,7 @@ class ChatScreen extends StatelessWidget {
   Widget _buildMessageList() {
     String senderID = _authService.getCurrentUser()!.uid;
     return StreamBuilder(
-      stream: _chatService.getMessages(receiverID, senderID),
+      stream: _chatService.getMessages(widget.receiverID, senderID),
       builder: (context, snapshot) {
         //   error
         if (snapshot.hasError) {
@@ -97,7 +105,7 @@ class ChatScreen extends StatelessWidget {
         crossAxisAlignment:
             isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          
+
          ChatBubble(message:  data["message"], isCurrentUser: isCurrentUser)
         ],
       ),

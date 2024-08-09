@@ -27,18 +27,60 @@ class _ChatScreenState extends State<ChatScreen> {
 
   //  chat & auth service
   final ChatService _chatService = ChatService();
-
   final AuthService _authService = AuthService();
+
+  // for textfield focus
+  FocusNode myFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    //  add listener to focus node
+    myFocusNode.addListener(
+      () {
+        if (myFocusNode.hasFocus) {
+          Future.delayed(
+            Duration(milliseconds: 500),
+            () => scrollDown(),
+          );
+        }
+      },
+    );
+
+Future.delayed(Duration(milliseconds: 500),
+() => scrollDown(),
+);
+    
+  }
+
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  // scroll controller
+  final ScrollController _scrollController = ScrollController();
+
+  void scrollDown() {
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+        duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+  }
 
   // send message
   void sendMessage() async {
     // if there is something inside textfield
     if (_messageController.text.isNotEmpty) {
       // send the message
-      await _chatService.sendMessage(widget.receiverID, _messageController.text);
+      await _chatService.sendMessage(
+          widget.receiverID, _messageController.text);
       //   clear text controller
       _messageController.clear();
     }
+    scrollDown();
   }
 
   @override
@@ -79,10 +121,12 @@ class _ChatScreenState extends State<ChatScreen> {
         }
         // return list view
         return ListView(
+          controller: _scrollController,
             children: snapshot.data!.docs
                 .map((doc) => _buildMessageItem(doc))
                 .toList());
       },
+
     );
   }
 
@@ -91,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     // is current user
     bool isCurrentUser =
-        data['senderEmail'] == _authService.getCurrentUser()!.uid;
+        data['senderEmail'] != _authService.getCurrentUser()!.uid;
 
     // align message to the right if sender is the current user, otherwise left
 
@@ -105,8 +149,7 @@ class _ChatScreenState extends State<ChatScreen> {
         crossAxisAlignment:
             isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-
-         ChatBubble(message:  data["message"], isCurrentUser: isCurrentUser)
+          ChatBubble(message: data["message"], isCurrentUser: isCurrentUser)
         ],
       ),
     );
@@ -123,6 +166,7 @@ class _ChatScreenState extends State<ChatScreen> {
               hintText: "Type a message",
               obscureText: false,
               controller: _messageController,
+              focusNode: myFocusNode,
             ),
           ),
 

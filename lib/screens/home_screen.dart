@@ -42,4 +42,13 @@ class HomeScreen extends StatelessWidget {
       },
     );
   }
+
+
+//   build individual list tile for the user
+  Widget _buildUserListItem(
+      Map<String, dynamic> userData, BuildContext context){
+  //   display all the user  except  current user
+    return UserTile();
+
+  }
 }

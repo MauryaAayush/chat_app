@@ -35,7 +35,7 @@ class MyDrawer extends StatelessWidget {
              Padding(
                padding: const EdgeInsets.only(left: 25),
                child: ListTile(
-                 title: Text('H O M E'),
+                 title: const Text('H O M E'),
                  leading: Icon(Icons.home,
                    color: Theme.of(context).colorScheme.primary,),
                  onTap: () {
@@ -47,7 +47,7 @@ class MyDrawer extends StatelessWidget {
              Padding(
                padding: const EdgeInsets.only(left: 25),
                child: ListTile(
-                 title: Text('S E T T I N G S'),
+                 title: const Text('S E T T I N G S'),
                  leading: Icon(Icons.settings,
                    color: Theme.of(context).colorScheme.primary,),
                  onTap: () {

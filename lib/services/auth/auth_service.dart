@@ -23,12 +23,12 @@ class AuthService {
       );
 
       // save user info if it doesn't already exist
-      _firestore.collection("Users").doc(userCredential.user!.uid).set(
-          {
-            'uid' : userCredential.user!.uid,
-            'email' : email
-          }
-      );
+      // _firestore.collection("Users").doc(userCredential.user!.uid).set(
+      //     {
+      //       'uid' : userCredential.user!.uid,
+      //       'email' : email
+      //     }
+      // );
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
@@ -37,19 +37,18 @@ class AuthService {
 
 // sign up
 
-  Future<UserCredential> signUpWithEmailPassword(String email, password) async {
+  Future<UserCredential> signUpWithEmailPassword(String email, password,mobile,name) async {
     try {
       // create user
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-
       // save user info if it doesn't already exist
-      _firestore.collection("Users").doc(userCredential.user!.uid).set(
+      _firestore.collection("Users").doc(userCredential.user!.email).set(
           {
             'uid' : userCredential.user!.uid,
             'email' : email,
-            // 'name' : name,
-            // 'mobile' : mobile,
+            'name' : name,
+            'mobile' : mobile,
           }
       );
 

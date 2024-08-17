@@ -17,13 +17,13 @@ class RegisterScreen extends StatelessWidget {
 
   RegisterScreen({super.key, required this.onTap});
 
-  void register(BuildContext context) {
+  Future<void> register(BuildContext context) async {
     final _auth = AuthService();
 
     // if password match
     if (_txtcnfpass.text == _txtpass.text) {
       try {
-        _auth.signUpWithEmailPassword(_txtemail.text, _txtpass.text);
+        await _auth.signUpWithEmailPassword(_txtemail.text, _txtpass.text,_txtname,_txtmobile);
       } catch (e) {
         showDialog(
           context: context,
@@ -54,6 +54,7 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 120,),
               //     logo
               Icon(
                 Icons.message,

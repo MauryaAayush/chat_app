@@ -62,7 +62,7 @@ class MyDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 25,bottom: 25),
             child: ListTile(
-              title: Text('L O G O U T'),
+              title: const Text('L O G O U T'),
               leading: Icon(Icons.logout,
                 color: Theme.of(context).colorScheme.primary,),
               onTap: logout,

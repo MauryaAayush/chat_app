@@ -172,11 +172,11 @@ Future.delayed(Duration(milliseconds: 500),
           ),
 
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.green,
               shape: BoxShape.circle,
             ),
-            margin: EdgeInsets.only(right: 25),
+            margin: const EdgeInsets.only(right: 25),
             child: IconButton(
               onPressed: sendMessage,
               icon: const Icon(

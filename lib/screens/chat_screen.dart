@@ -65,6 +65,7 @@ Future.delayed(Duration(milliseconds: 500),
   // scroll controller
   final ScrollController _scrollController = ScrollController();
 
+  // for the message scroll control of screen.
   void scrollDown() {
     _scrollController.animateTo(_scrollController.position.maxScrollExtent,
         duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
